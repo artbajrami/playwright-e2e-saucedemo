@@ -2,7 +2,7 @@
 
 [![Playwright E2E Tests](https://github.com/YOUR_USERNAME/playwright-e2e-saucedemo/actions/workflows/playwright.yml/badge.svg)](https://github.com/artbajrami/playwright-e2e-saucedemo/actions/workflows/playwright.yml)
 
-End-to-end test suite for [Sauce Demo](https://www.saucedemo.com) built with **Playwright** and **TypeScript**. Includes **CI/CD with GitHub Actions** (push, PR, scheduled). Good for portfolio and learning pipeline automation.
+End-to-end test suite for [Sauce Demo](https://www.saucedemo.com) built with **Playwright** and **TypeScript**. Includes **CI/CD with GitHub Actions** (push, PR, scheduled). 
 
 ---
 

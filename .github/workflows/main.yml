@@ -1,0 +1,71 @@
+# =============================================================================
+# Playwright E2E – CI/CD Pipeline
+# =============================================================================
+# TRIGGERS (when the pipeline runs):
+#   1. Push to main or master
+#   2. Any pull request targeting main or master
+#   3. Schedule: every day at 06:00 UTC
+#
+# WHAT IT DOES:
+#   Checkout → Node.js → npm ci → Install Chromium → Run tests → Upload report
+# =============================================================================
+
+name: Playwright E2E Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    # Allows "Run workflow" from GitHub Actions tab (useful for testing the pipeline)
+  schedule:
+    - cron: '0 6 * * *'   # Daily at 06:00 UTC
+
+jobs:
+  e2e:
+    name: E2E (Desktop · Tablet · Mobile)
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+
+    steps:
+      # --- Checkout your repo ---
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # --- Install Node.js and use npm cache for speed ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*.'
+          cache: 'npm'
+
+      # --- Install project dependencies (lockfile must exist) ---
+      - name: Install dependencies
+        run: npm ci
+
+      # --- Install only Chromium (config uses desktop/tablet/mobile = Chromium) ---
+      - name: Install Playwright browsers (Chromium)
+        run: npx playwright install --with-deps chromium
+
+      # --- Run the test suite; fails the job if any test fails ---
+      - name: Run Playwright tests
+        run: npm run test
+
+      # --- Save the HTML report so you can download it after the run ---
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      # --- Optional: save test results for failed runs (screenshots, traces) ---
+      - name: Upload test results (on failure)
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7

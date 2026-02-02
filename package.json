@@ -1,0 +1,35 @@
+{
+  "name": "playwright-e2e-saucedemo",
+  "version": "1.0.0",
+  "description": "Professional E2E test suite for Sauce Demo using Playwright and TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "test:smoke": "playwright test tests/smoke",
+    "test:auth": "playwright test tests/auth",
+    "test:shopping": "playwright test tests/shopping",
+    "test:desktop": "playwright test --project=desktop",
+    "test:tablet": "playwright test --project=tablet",
+    "test:mobile": "playwright test --project=mobile",
+    "report": "playwright show-report"
+  },
+  "keywords": [
+    "playwright",
+    "e2e",
+    "testing",
+    "sauce-demo",
+    "typescript",
+    "ci",
+    "github-actions",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}

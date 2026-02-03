@@ -7,7 +7,7 @@
 #   3. Schedule: every day at 06:00 UTC
 #
 # WHAT IT DOES:
-#   Checkout → Node.js → npm ci → Install Chromium → Run tests → Upload report
+#   Checkout → Node.js → npm ci → Install Chromium + WebKit → Run tests → Upload report
 # =============================================================================
 
 name: Playwright E2E Tests
@@ -20,7 +20,7 @@ on:
   workflow_dispatch:
     # Allows "Run workflow" from GitHub Actions tab (useful for testing the pipeline)
   schedule:
-    - cron: '0 6 * * *'   # Daily at 06:00 UTC
+    - cron: "0 6 * * *" # Daily at 06:00 UTC
 
 jobs:
   e2e:
@@ -37,16 +37,16 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'npm'
+          node-version: "lts/*"
+          cache: "npm"
 
       # --- Install project dependencies (lockfile must exist) ---
       - name: Install dependencies
         run: npm ci
 
-      # --- Install only Chromium (config uses desktop/tablet/mobile = Chromium) ---
-      - name: Install Playwright browsers (Chromium)
-        run: npx playwright install --with-deps chromium
+      # --- Install Chromium (desktop) + WebKit (tablet/iPad, mobile/iPhone) ---
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
 
       # --- Run the test suite; fails the job if any test fails ---
       - name: Run Playwright tests

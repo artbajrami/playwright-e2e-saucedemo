@@ -1,4 +1,4 @@
-# Playwright E2E – Sauce Demo
+Playwright E2E – Sauce Demo
 
 [![Playwright E2E Tests](https://github.com/YOUR_USERNAME/playwright-e2e-saucedemo/actions/workflows/playwright.yml/badge.svg)](https://github.com/artbajrami/playwright-e2e-saucedemo/actions/workflows/playwright.yml)
 
